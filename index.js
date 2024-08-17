@@ -20,9 +20,9 @@ app.use(bodyParser.json());
 const cache = new NodeCache({ stdTTL: 600 });
 
 const debounce = (req, res, next) => {
-  console.log('Delay middleware triggered');
+  console.log('Debounce triggered');
   setTimeout(() => {
-    console.log('Delay finished, passing control to next middleware');
+    console.log('Debounce finished, passing control to next debounce');
     next();
   }, 3000);
 };
