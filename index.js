@@ -46,7 +46,7 @@ app.post("/whitelist-check", (req, res) => {
   }
 
   console.log('Cache miss for Username:', r);
-  const resp = { message: r.includes("AWDA") || r.includes("ROBLOX") ? "user is whitelisted" : "user is not whitelisted" };
+  const resp = { message: r.includes("COOLUSER") || r.includes("ROBLOX") ? "user is whitelisted" : "user is not whitelisted" };
   console.log('resp:', resp);
   cache.set(r, resp);
   res.json(resp);
