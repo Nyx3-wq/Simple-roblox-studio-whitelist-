@@ -6,9 +6,10 @@ My website: pedophile.cc (I know the domain name is a bit weird it's just a abou
 My discord server: https://discord.gg/ZFEQCDB3eW (NSFW SERVER!!!)
 */
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const NodeCache = require("node-cache");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,23 +17,41 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/whitelist-check', (req, res) => {
-    const { Username } = req.body;
-    console.log("Received whitelist check for username:", Username);
+const cache = new NodeCache({ stdTTL: 600 });
 
-    if (!Username) {
-        console.log("Invalid request: Username is missing.");
-        return res.status(400).send('Invalid request');
-    }
-    if (Username.includes("ROBLOX") || Username.includes("ROBLOX")) { // you can keep on adding usernames here
-        console.log("User is whitelisted:", Username);
-        res.json({ message: "user is whitelisted" });
-    } else {
-        console.log("User is not whitelisted:", Username);
-        res.json({ message: "user is not whitelisted" });
-    }
+const debounce = (req, res, next) => {
+  console.log('Delay middleware triggered');
+  setTimeout(() => {
+    console.log('Delay finished, passing control to next middleware');
+    next();
+  }, 3000);
+};
+
+app.use("/whitelist-check", debounce);
+
+app.post("/whitelist-check", (req, res) => {
+  console.log('POST /whitelist-check route hit');
+  const { Username: r } = req.body;
+  console.log('Received Username:', r);
+
+  if (!r) {
+    console.log('Invalid request: Username is missing');
+    return res.status(400).send("Invalid request");
+  }
+
+  const crsp = cache.get(r);
+  if (crsp) {
+    console.log('Cache hit for Username:', r);
+    return res.json(crsp);
+  }
+
+  console.log('Cache miss for Username:', r);
+  const resp = { message: r.includes("AWDA") || r.includes("ROBLOX") ? "user is whitelisted" : "user is not whitelisted" };
+  console.log('resp:', resp);
+  cache.set(r, resp);
+  res.json(resp);
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
