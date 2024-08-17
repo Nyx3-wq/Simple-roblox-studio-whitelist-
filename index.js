@@ -6,52 +6,53 @@
   My discord server: https://discord.gg/ZFEQCDB3eW (NSFW SERVER!!!)
 */
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const NodeCache = require("node-cache");
+import e from 'express';
+import f from 'fs';
+import p from 'path';
+import { fileURLToPath as u } from 'url';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app = e();
+app.use(e.json());
 
-app.use(cors());
-app.use(bodyParser.json());
+const fpth = u(import.meta.url);
+const dpth = p.dirname(fpth);
 
-const cache = new NodeCache({ stdTTL: 600 });
+const wpth = p.join(dpth, 'whitelist.json');
 
-const debounce = (req, res, next) => {
-  console.log('Debounce triggered');
-  setTimeout(() => {
-    console.log('Debounce finished, passing control to next debounce');
-    next();
-  }, 3000);
-};
+const ldwl = () => f.existsSync(wpth) ? JSON.parse(f.readFileSync(wpth, 'utf8')) : [];
 
-app.use("/whitelist-check", debounce);
-
-app.post("/whitelist-check", (req, res) => {
-  console.log('POST /whitelist-check route hit');
-  const { Username: r } = req.body;
-  console.log('Received Username:', r);
-
-  if (!r) {
-    console.log('Invalid request: Username is missing');
-    return res.status(400).send("Invalid request");
-  }
-
-  const crsp = cache.get(r);
-  if (crsp) {
-    console.log('Cache hit for Username:', r);
-    return res.json(crsp);
-  }
-
-  console.log('Cache miss for Username:', r);
-  const resp = { message: r.includes("COOLUSER") || r.includes("ROBLOX") ? "user is whitelisted" : "user is not whitelisted" };
-  console.log('resp:', resp);
-  cache.set(r, resp);
-  res.json(resp);
+app.get('/whitelist-check', (req, res) => {
+  const username = req.query.Username;
+  if (!username) return res.status(400).send("Invalid request");
+  const wl = ldwl();
+  const iswld = wl.includes(username);
+  res.json({ Username: username, iswld });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.post('/whitelist', (req, res) => {
+  const { Username: username } = req.body;
+  if (!username) return res.status(400).send("Invalid request");
+  const wl = ldwl();
+  if (!wl.includes(username)) {
+    wl.push(username);
+    f.writeFileSync(wpth, JSON.stringify(wl, null, 2));
+    return res.json({ message: "User added to whitelist" });
+  }
+  res.json({ message: "User is already whitelisted" });
 });
+
+app.post('/unwhitelist', (req, res) => {
+  const { Username: username } = req.body;
+  if (!username) return res.status(400).send("Invalid request");
+  let wl = ldwl();
+  if (wl.includes(username)) {
+    wl = wl.filter(user => user !== username);
+    f.writeFileSync(wpth, JSON.stringify(wl, null, 2));
+    return res.json({ message: "User removed from whitelist" });
+  }
+  res.json({ message: "User is not in whitelist" });
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server is running on port ${port}`));
+
