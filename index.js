@@ -1,9 +1,9 @@
 /*
-If you are gonna improve on this design or use it in general (Please don't it's insecure asf) Give me credits!
-
-My discord: milw0rm.5
-My website: pedophile.cc (I know the domain name is a bit weird it's just a about me site)
-My discord server: https://discord.gg/ZFEQCDB3eW (NSFW SERVER!!!)
+  If you are gonna improve on this design or use it in general (Please don't it's insecure asf) Give me credits!
+  
+  My discord: milw0rm.5
+  My website: pedophile.cc (I know the domain name is a bit weird it's just a about me site)
+  My discord server: https://discord.gg/ZFEQCDB3eW (NSFW SERVER!!!)
 */
 
 const express = require("express");
