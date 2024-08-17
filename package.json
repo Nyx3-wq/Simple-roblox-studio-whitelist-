@@ -1,0 +1,12 @@
+{
+  "type": "module", 
+  "dependencies": {
+    "cors": "^2.8.5",
+    "discord.js": "^14.15.3",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^3.3.2",
+    "rate-limiter-flexible": "^5.0.3"
+  }
+}
