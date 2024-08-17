@@ -17,7 +17,7 @@ game.Players.PlayerAdded:Connect(function(player)
 		Username = Username
 	}
 
-	-- Convert Lua table to JSON string
+	-- Convert table to JSON string
 	local jsonData = HttpService:JSONEncode(data)
 
 	-- Send POST request to backend
