@@ -42,7 +42,7 @@ const unwl = {
 client.once('ready', async () => {
     console.log(`[INFO] Logged in as ${client.user.tag}!`);
     try {
-        const rest = new REST({ version: '10' }).setToken(token);
+        const rest = new REST({ version: '10' }).setToken('MTI3NTA3NDg2MzQ2MzI3MjQ2OQ.GFOdQj.fOlf4o8SfYkZQenoPSbhdHV9qwGVtOgEIGQgNI'); // ur token here
         console.log("[INFO] Refreshing application (/) commands...");
 
         const guilds = client.guilds.cache.map(guild => guild.id);
@@ -108,4 +108,4 @@ client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.login('');
+client.login('MTI3NTA3NDg2MzQ2MzI3MjQ2OQ.GFOdQj.fOlf4o8SfYkZQenoPSbhdHV9qwGVtOgEIGQgNI'); // ur bot token here
