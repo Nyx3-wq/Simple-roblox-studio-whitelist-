@@ -3,7 +3,6 @@
   
   My discord: milw0rm.5
   My website: pedophile.cc (I know the domain name is a bit weird it's just a about me site)
-  My discord server: https://discord.gg/ZFEQCDB3eW (NSFW SERVER!!!)
 */
 
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
