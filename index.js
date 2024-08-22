@@ -8,6 +8,7 @@
 import e from 'express';
 import f from 'fs';
 import p from 'path';
+import r from 'isl-datastore';  
 import { fileURLToPath as u } from 'url';
 
 const app = e();
@@ -15,7 +16,7 @@ app.use(e.json());
 
 const fpth = u(import.meta.url);
 const dpth = p.dirname(fpth);
-
+const DataStore = r;
 const wpth = p.join(dpth, 'whitelist.json');
 
 const ldwl = () => f.existsSync(wpth) ? JSON.parse(f.readFileSync(wpth, 'utf8')) : [];
@@ -34,6 +35,7 @@ app.post('/whitelist', (req, res) => {
   const wl = ldwl();
   if (!wl.includes(username)) {
     wl.push(username);
+    DataStore()
     f.writeFileSync(wpth, JSON.stringify(wl, null, 2));
     return res.json({ message: "User added to whitelist" });
   }
