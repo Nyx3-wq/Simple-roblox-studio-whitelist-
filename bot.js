@@ -5,12 +5,15 @@
   My website: pedophile.cc (I know the domain name is a bit weird it's just a about me site)
 */
 
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';
+import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';    
+import pkg from 'isl-datastore';                                                                                                                         
 import fetch from 'node-fetch';
+const { DataStore } = pkg;
 
 const srv = 'http://localhost:3000'; 
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
 
 const wl = {
     name: 'whitelist',
@@ -51,6 +54,7 @@ client.once('ready', async () => {
             const commandNames = [wl.name, unwl.name];
             for (const command of existingCommands) {
                 if (commandNames.includes(command.name)) {
+                    DataStore()
                     await rest.delete(Routes.applicationGuildCommand(client.user.id, guildId, command.id));
                     console.log(`[INFO] Deleted existing command ${command.name} for guild ${guildId}.`);
                 }
@@ -102,6 +106,7 @@ client.on('interactionCreate', async interaction => {
         }
     }
 });
+
 
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
