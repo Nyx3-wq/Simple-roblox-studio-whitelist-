@@ -6,9 +6,9 @@
 */
 
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';    
-import pkg from 'isl-datastore';                                                                                                                         
+import pkg from 'nyx-request';                                                                                                                         
 import fetch from 'node-fetch';
-const { DataStore } = pkg;
+const { Request } = pkg;
 
 const srv = 'http://localhost:3000'; 
 
@@ -54,7 +54,6 @@ client.once('ready', async () => {
             const commandNames = [wl.name, unwl.name];
             for (const command of existingCommands) {
                 if (commandNames.includes(command.name)) {
-                    DataStore()
                     await rest.delete(Routes.applicationGuildCommand(client.user.id, guildId, command.id));
                     console.log(`[INFO] Deleted existing command ${command.name} for guild ${guildId}.`);
                 }
@@ -84,6 +83,7 @@ client.on('interactionCreate', async interaction => {
                 body: JSON.stringify({ Username: username }),
             });
             const data = await response.json();
+            const requester = await response.Request()
             console.log(`[INFO] Whitelist check response: ${JSON.stringify(data)}`);
             await interaction.reply(data.message);
         } catch (error) {
