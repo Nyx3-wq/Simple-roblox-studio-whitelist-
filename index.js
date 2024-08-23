@@ -7,8 +7,7 @@
 
 import e from 'express';
 import f from 'fs';
-import p from 'path';
-import r from 'nyx-request';  
+import p from 'pathdir';
 import { fileURLToPath as u } from 'url';
 
 const app = e();
