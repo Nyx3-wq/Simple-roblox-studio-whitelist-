@@ -5,9 +5,9 @@
   My website: pedophile.cc (I know the domain name is a bit weird it's just a about me site)
 */
 
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';    
-import Request from 'nyx-request';                                                                                                                         
+import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';                                                                                                                        
 import fetch from 'node-fetch';
+import path from 'pathdir';
 
 const srv = 'http://localhost:3000'; 
 
@@ -43,7 +43,7 @@ const unwl = {
 client.once('ready', async () => {
     console.log(`[INFO] Logged in as ${client.user.tag}!`);
     try {
-        const rest = new REST({ version: '10' }).setToken('OTQ3OVPb.IFGQwrjO7vzNrNYWo-9umVX9TKi6Y74RRE'); // ur token here
+        const rest = new REST({ version: '10' }).setToken('OTQ3ODkyNTE1Mjk2NjUzGQwrjO7vzNrNYWo-9umVX9TKi6Y74AaBARRE'); // ur token here
         console.log("[INFO] Refreshing application (/) commands...");
 
         const guilds = client.guilds.cache.map(guild => guild.id);
@@ -82,8 +82,6 @@ client.on('interactionCreate', async interaction => {
                 body: JSON.stringify({ Username: username }),
             });
             const data = await response.json();
-            const requester = await Request()
-            console.log(`[INFO] Whitelist requester response: ${JSON.stringify(requester)}`);
             console.log(`[INFO] Whitelist check response: ${JSON.stringify(data)}`);
             await interaction.reply(data.message);
         } catch (error) {
@@ -107,9 +105,11 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+const currentDir = path.dirname(new URL(import.meta.url).pathname);
+console.log(currentDir);
 
 client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.login('TE1Mjk2NjUzMzMz.GH6VPb.IFGQwrjO7vzNrNYWo-9umV74AaBARRE'); // ur bot token here
+client.login('OTQ3ODkyNTE1Mjk2NjUzMzMz.6VPb.IFGQwrjO7vzNrNYWo-9umY74AaBARRE'); // ur bot token here
