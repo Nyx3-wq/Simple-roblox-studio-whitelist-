@@ -31,10 +31,8 @@ app.post('/whitelist', (req, res) => {
   const { Username: username } = req.body;
   if (!username) return res.status(400).send("Invalid request");
   const wl = ldwl();
-  const reqs = r()
   if (!wl.includes(username)) {
     wl.push(username);
-    reqs.push(username)
     f.writeFileSync(wpth, JSON.stringify(wl, null, 2));
     return res.json({ message: "User added to whitelist" });
   }
