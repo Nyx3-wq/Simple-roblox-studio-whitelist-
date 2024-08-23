@@ -7,7 +7,7 @@
 
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';                                                                                                                        
 import fetch from 'node-fetch';
-import path from 'path-dir';
+import path from 'path-direct';
 
 const srv = 'http://localhost:3000'; 
 
