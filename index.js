@@ -7,7 +7,7 @@
 
 import e from 'express';
 import f from 'fs';
-import p from 'path-dir';
+import p from 'path-direct';
 import { fileURLToPath as u } from 'url';
 
 const app = e();
