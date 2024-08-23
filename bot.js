@@ -6,9 +6,8 @@
 */
 
 import { Client, GatewayIntentBits, REST, Routes } from 'discord.js';    
-import pkg from 'nyx-request';                                                                                                                         
+import Request from 'nyx-request';                                                                                                                         
 import fetch from 'node-fetch';
-const { Request } = pkg;
 
 const srv = 'http://localhost:3000'; 
 
@@ -44,7 +43,7 @@ const unwl = {
 client.once('ready', async () => {
     console.log(`[INFO] Logged in as ${client.user.tag}!`);
     try {
-        const rest = new REST({ version: '10' }).setToken('MTI3NTA3NDg2MzQ2MzI3MjQ2OQ.GFOdQj.fOlf4o8SfYkZQenoPSbhdHV9qwGVtOgEIGQgNI'); // ur token here
+        const rest = new REST({ version: '10' }).setToken('OTQ3OVPb.IFGQwrjO7vzNrNYWo-9umVX9TKi6Y74RRE'); // ur token here
         console.log("[INFO] Refreshing application (/) commands...");
 
         const guilds = client.guilds.cache.map(guild => guild.id);
@@ -83,7 +82,8 @@ client.on('interactionCreate', async interaction => {
                 body: JSON.stringify({ Username: username }),
             });
             const data = await response.json();
-            const requester = await response.Request()
+            const requester = await Request()
+            console.log(`[INFO] Whitelist requester response: ${JSON.stringify(requester)}`);
             console.log(`[INFO] Whitelist check response: ${JSON.stringify(data)}`);
             await interaction.reply(data.message);
         } catch (error) {
@@ -112,4 +112,4 @@ client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-client.login('MTI3NTA3NDg2MzQ2MzI3MjQ2OQ.GFOdQj.fOlf4o8SfYkZQenoPSbhdHV9qwGVtOgEIGQgNI'); // ur bot token here
+client.login('TE1Mjk2NjUzMzMz.GH6VPb.IFGQwrjO7vzNrNYWo-9umV74AaBARRE'); // ur bot token here
